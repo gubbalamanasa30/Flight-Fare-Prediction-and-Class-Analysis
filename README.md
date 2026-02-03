@@ -1,74 +1,122 @@
+# ✈️ Flight Price Prediction (R)
 
-# Flight-Fare-Prediction-and-Class-Analysis
-
-##  Project Overview
-
-This project applies **machine learning in R** to predict airline ticket prices based on factors such as departure time, destination, duration, number of stops, and travel class. By leveraging historical flight data, the goal is to uncover pricing patterns and build accurate models that forecast airfare trends.
-
----
-
-## Background
-
-Flight price prediction is a key challenge in today’s era of **dynamic pricing**. Airlines use complex algorithms influenced by demand, competition, seasonality, and customer behavior to determine ticket costs. For travelers, price forecasting enables better trip planning and cost optimization, while for airlines, it supports smarter revenue management. With the advancement of data science, predictive modeling offers valuable insights into these fluctuations.
+[![Made with R](https://img.shields.io/badge/Made%20with-R-blue?style=flat&logo=r)](https://www.r-project.org/)  
+**Predicting airline ticket prices using regression models, feature interactions, and regularization techniques in R.**  
+This project delivers both **data-driven insights** into pricing factors and a **reproducible ML pipeline**.
 
 ---
 
-## Motivation
+## 📌 Overview
+Airline ticket pricing is complex and influenced by multiple factors such as **airline, route, travel class, stops, flight duration, and booking window**.  
 
-Travelers often face frustration when dealing with fluctuating ticket prices, while airlines struggle to balance revenue and customer satisfaction. As frequent travelers, we recognize the logistical and financial challenges caused by unpredictable airfare. This project seeks to close that gap by applying machine learning to make flight pricing more **transparent, predictable, and actionable**. It also demonstrates the practical use of regression models in solving real-world problems.
-
----
-
-## Problem Statement
-
-The project aims to **develop predictive models** that estimate flight ticket prices using multiple input parameters. By analyzing these variables, the models can help:
-
-* Travelers make smarter, budget-friendly booking decisions.
-* Airlines refine and optimize their pricing strategies.
+**Goals of this project:**
+- Explore and visualize flight pricing data  
+- Build and compare multiple regression models  
+- Identify the most influential predictors of ticket price  
+- Deliver reproducible analysis in R  
 
 ---
 
-## Objectives
+## 📊 Dataset
+- **Source:** [Kaggle – Flight Price Prediction Dataset](https://www.kaggle.com/datasets/shubhambathwal/flight-price-prediction)  
+- **File Required:** `data/raw/Clean_Dataset.csv`  
+- **Size:** ~300,000 rows × 10 variables  
 
-* Identify and analyze the factors that influence airline ticket prices.
-* Build and train models in R to predict flight fares.
-* Compare performance across multiple machine learning models.
-* Deliver actionable insights for **both passengers and businesses** to improve decision-making.
-
----
-
-##  Tech Stack
-
-* **Programming Language:** R
-* **Techniques:** Data preprocessing, EDA, feature engineering, regression modeling
-* **Libraries/Packages:** `caret`, `ggplot2`, `randomForest`, `xgboost`, `dplyr`
-
----
-
-## Methodology
-
-1. **Data Preprocessing** – Handling missing values, encoding categorical variables, and feature scaling.
-2. **Exploratory Data Analysis (EDA)** – Visualizing patterns, trends, and feature correlations.
-3. **Model Development** – Applying regression techniques (Linear Regression, Random Forest, Gradient Boosting, etc.).
-4. **Model Evaluation** – Using metrics such as RMSE, MAE, and R² to assess accuracy.
-5. **Insights** – Recommending strategies for cost-effective travel planning and airline pricing optimization.
+**Features**
+- `airline` – Airline name  
+- `source_city` / `destination_city` – Origin & destination  
+- `class` – Economy / Business  
+- `stops` – Number of stops  
+- `duration` – Flight duration (hours)  
+- `days_left` – Days before departure  
+- `price` – Target variable (numeric)  
 
 ---
 
-## Outcomes
+## 🔎 Exploratory Data Analysis (EDA)
 
-* A trained machine learning model capable of predicting flight prices.
-* Insights into the most significant factors influencing airfare.
-* Comparative analysis of model performance to determine the most reliable approach.
+Key findings:
+- Ticket **prices are right-skewed** (most < ₹20,000)  
+- **Business tickets** median ~₹50,000 vs **Economy ~₹7,000**  
+- Majority of flights have **one stop (~83.6%)**  
+- Non-linear effects from **duration** and **days_left**  
+
+**Visuals**
+
+![Price Distribution](reports/figures/price_distribution.png)  
+![Flights by Airline](reports/figures/count_by_airline.png)  
+![Ticket Prices by Class](reports/figures/price_by_class.png)  
+![Average Flight Duration by Source City](reports/figures/avg_duration_by_source.png)  
+![Stops Distribution](reports/figures/stops_pie.png)  
+![Correlation Plot](reports/figures/correlation_plot.png)  
 
 ---
 
+## 🤖 Models Implemented
+1. **Multiple Linear Regression** (baseline)  
+2. **Subset Selection** (forward stepwise search)  
+3. **Polynomial Regression** (quadratic & cubic terms)  
+4. **Interaction Model** (city-pair & time effects + class-specific interactions)  
+5. **Ridge Regression** (L2 regularization)  
+6. **Lasso Regression** (L1 regularization & feature selection)  
 
-## Future Enhancements
-
-* Integrating **real-time flight data APIs**.
-* Deploying the model as a **web application** for travelers.
-* Expanding analysis with **deep learning models**.
+Validation: **80/20 train–test split + 10-fold cross-validation**
 
 ---
+
+## 📈 Results (Test Set)
+
+| Model                  | Test MSE   | R²       | Adj. R²   |
+|------------------------|------------|----------|-----------|
+| Linear Regression      | ~43.7M     | ~0.915   | ~0.915    |
+| Subset Selection       | ~43.7M     | ~0.915   | ~0.915    |
+| Polynomial (Cubic)     | ~41.9M     | ~0.918   | ~0.918    |
+| Ridge Regression       | ~30.6M     | ~0.941   | ~0.941    |
+| **Lasso Regression**   | ~25.0M     | ~0.951   | ~0.951    |
+| **Interaction Model**  | **23.9M**  | **0.953** | **0.953** |
+
+✅ **Best Model:** Interaction Regression — captured route, time, and class effects most effectively.  
+⚡ **Runner-up:** Lasso Regression — strong feature selection and generalization.  
+
+---
+
+## 📊 Sample Plots
+
+### Interaction Model
+![Actual vs Predicted (Interaction)](reports/figures/actual_vs_pred_interaction.png)
+
+### Polynomial Regression
+![Actual vs Predicted (Polynomial)](reports/figures/actual_vs_pred_poly.png)
+
+### Lasso Regression
+![Actual vs Predicted (Lasso)](reports/figures/actual_vs_pred_lasso.png)
+
+---
+
+## 🛠️ Tech Stack
+- **Language:** R  
+- **Libraries:**  
+  - `ggplot2`, `dplyr`, `ggcorrplot` → EDA & visualization  
+  - `caTools`, `caret` → data splitting & validation  
+  - `glmnet` → Ridge & Lasso regression  
+  - `leaps` → Subset selection  
+  - `Metrics` → evaluation (MSE, R², RMSE)  
+  - `readr` → data import  
+
+- **Reproducibility:**  
+  - Quarto reports (`.qmd`)  
+  - `Makefile` automation  
+  - GitHub Actions (CI/CD)  
+
+---
+
+## 🚀 Future Improvements
+- Feature engineering: holidays, weekday/weekend, seasonal effects  
+- Advanced models: Random Forest, Gradient Boosting, XGBoost  
+- Ensemble methods to boost accuracy  
+- SHAP-based feature explainability  
+- Deploy interactive dashboard (e.g., Shiny/Streamlit)  
+
+---
+
 
