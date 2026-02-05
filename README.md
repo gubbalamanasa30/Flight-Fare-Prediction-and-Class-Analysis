@@ -41,15 +41,6 @@ Key findings:
 - Majority of flights have **one stop (~83.6%)**  
 - Non-linear effects from **duration** and **days_left**  
 
-**Visuals**
-
-![Price Distribution](reports/figures/price_distribution.png)  
-![Flights by Airline](reports/figures/count_by_airline.png)  
-![Ticket Prices by Class](reports/figures/price_by_class.png)  
-![Average Flight Duration by Source City](reports/figures/avg_duration_by_source.png)  
-![Stops Distribution](reports/figures/stops_pie.png)  
-![Correlation Plot](reports/figures/correlation_plot.png)  
-
 ---
 
 ## 🤖 Models Implemented
@@ -77,19 +68,6 @@ Validation: **80/20 train–test split + 10-fold cross-validation**
 
 ✅ **Best Model:** Interaction Regression — captured route, time, and class effects most effectively.  
 ⚡ **Runner-up:** Lasso Regression — strong feature selection and generalization.  
-
----
-
-## 📊 Sample Plots
-
-### Interaction Model
-![Actual vs Predicted (Interaction)](reports/figures/actual_vs_pred_interaction.png)
-
-### Polynomial Regression
-![Actual vs Predicted (Polynomial)](reports/figures/actual_vs_pred_poly.png)
-
-### Lasso Regression
-![Actual vs Predicted (Lasso)](reports/figures/actual_vs_pred_lasso.png)
 
 ---
 
